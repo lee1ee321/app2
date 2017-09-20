@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="stylesheets/style.css">
+	<script type='text/javascript'>
+		window.onload=function(){
+			var form=document.forms[0];
+			form.onsubmit=function(event){
+				//ajax
+				var action=form.action;
+				var request=new XMLHttpRequest();
+				request.open('GET',action,true);
+				request.send(); 
+		//监听就绪状态的改变，当request.readyState的取值为４的时候，代表一次请求的完成
+				request.onreadystatechange=function(){
+					if(request.readyState==4){
+						if(request.status==200){
+							var data=JSON.parse(request.responseText);
+							//data.forEach(function(data){
+									updateData(data);
+							//})
+						}
+					}
+				}
+
+
+				event.preventDefault();//阻止跳转的行为
+			} 
+
+		}
+		function updateData(data){
+			data.forEach(function(item){
+				var tbody=document.getElementsByTagName('tbody')[0];
+				var newTr=document.createElement('tr');
+				var newTd1=document.createElement('td');
+				newTd1.innerText=item.id;
+				var newTd2=document.createElement('td');
+				newTd2.innerText=item.name;
+				var newTd3=document.createElement('td');
+				newTd3.innerText=item.gender;
+				var newTd4=document.createElement('td');
+				newTd4.innerText=item.birth;
+				newTr.appendChild(newTd1);
+				newTr.appendChild(newTd2);
+				newTr.appendChild(newTd3);
+				newTr.appendChild(newTd4);
+				tbody.appendChild(newTr);
+			});
+		}
+	</script>
+</head>
+<body>
+	<h2>学生管理</h2>
+	<hr>
+	<form action="student/findAll" method="get">
+		<input type="search" placeholder="关键字" name="key">
+		<input type="submit" value="search">
+	</form>
+	<table>
+		<tbody>
+			<tr>
+				<td>编号</td>
+				<td>姓名</td>
+				<td>性别</td>
+				<td>出生日期</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+	<div>
+		<button>添加</button>
+		<button>修改</button>
+		<button>删除</button>
+	</div>
+</body>
+</html>
