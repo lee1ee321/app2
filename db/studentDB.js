@@ -21,10 +21,10 @@ function findAll(handler){
                         });
          }
      });
-}
+} 
 
 //删除
-function deleteById(id,handler){
+function bathDelete(ids,handler){
     pool.getConnection(function(err,connection){
            if(err){
             throw err

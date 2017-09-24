@@ -5,6 +5,28 @@
 	<title></title>
 	<link rel="stylesheet" href="stylesheets/style.css">
 	<script type='text/javascript'>
+		var ajax={
+			post:function(url,data,handler){
+				var request=new XMLHttpRequest();
+				request.open('POST',url,true);
+				request
+			}
+			,
+			getJSON:function(url,handler){
+				var request=new XMLHttpRequest();
+				request.open('GET',action,true);
+				request.send(); 
+				request.onreadystatechange=function(){
+					if(request.readyState==4){
+						if(request.status==200){
+							var data=JSON.parse(request.responseText);
+							handler.call(this,data)
+							//})
+						}
+					}
+				}
+			}
+		}
 		window.onload=function(){
 			var form=document.forms[0];
 			form.onsubmit=function(event){
